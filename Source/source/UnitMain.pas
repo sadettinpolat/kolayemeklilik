@@ -4,50 +4,41 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,UnitTEmekli, Mask,dateutils, sSkinManager,
-  sSkinProvider, sHintManager, sButton, Buttons, sSpeedButton, sBitBtn,
-  sPageControl, sTabControl, sMemo, ComCtrls, ToolWin, sToolBar, sStatusBar,
-  Menus, sLabel, sMaskEdit, sCustomComboEdit, sTooledit, sGroupBox,
-  ExtCtrls, sComboBox, sEdit, sSpinEdit, ActnList, ImgList,sdialogs, sPanel;
+  Dialogs, StdCtrls,UnitTEmekli, Mask,dateutils, ImgList, ActnList, Menus,
+  Buttons, ExtCtrls, ComCtrls, ToolWin, Spin;
 
 const strProgramAdi='Kolay Emeklilik';
-const strProgramVersiyon = '1.2 Beta';
+const strProgramVersiyon = '1.1 Beta';
 
 type
   TfrmAna = class(TForm)
-    sSkinManager1: TsSkinManager;
-    sSkinProvider1: TsSkinProvider;
-    sHintManager1: TsHintManager;
-    sStatusBar1: TsStatusBar;
-    sToolBar1: TsToolBar;
+    sStatusBar1: TStatusBar;
+    sToolBar1: TToolBar;
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
     ToolButton6: TToolButton;
     ToolButton8: TToolButton;
-    memoResult: TsMemo;
+    memoResult: TMemo;
     MainMenu1: TMainMenu;
     Dosya1: TMenuItem;
     Hakknda1: TMenuItem;
     Yardm1: TMenuItem;
     Hakknda2: TMenuItem;
-    sGroupBox1: TsGroupBox;
-    edtDogumTarihi: TsDateEdit;
-    sLabel1: TsLabel;
-    sLabel2: TsLabel;
-    sLabel3: TsLabel;
-    sLabel4: TsLabel;
-    sLabel5: TsLabel;
+    sGroupBox1: TGroupBox;
+    sLabel1: TLabel;
+    sLabel2: TLabel;
+    sLabel3: TLabel;
+    sLabel4: TLabel;
+    sLabel5: TLabel;
     Image1: TImage;
-    edtSigortaliBaslangicTarihi: TsDateEdit;
-    cmbCinsiyet: TsComboBox;
-    edtPrimOdemeGunSayisi: TsSpinEdit;
-    edtIstegeBagliGunSayisi: TsSpinEdit;
-    sLabel6: TsLabel;
-    sLabel7: TsLabel;
-    sLabel9: TsLabel;
-    edtAskerlikTarihi: TsDateEdit;
-    edtAskerlikPrimSayisi: TsSpinEdit;
-    edtBagkur: TsSpinEdit;
+    cmbCinsiyet: TComboBox;
+    edtPrimOdemeGunSayisi: TSpinEdit;
+    edtIstegeBagliGunSayisi: TSpinEdit;
+    sLabel6: TLabel;
+    sLabel7: TLabel;
+    sLabel9: TLabel;
+    edtAskerlikPrimSayisi: TSpinEdit;
+    edtBagkur: TSpinEdit;
     ActionList1: TActionList;
     actAlanlariSifirla: TAction;
     ImageList16x16: TImageList;
@@ -58,10 +49,10 @@ type
     N1: TMenuItem;
     k1: TMenuItem;
     EmeklilikHesapla1: TMenuItem;
-    S: TsGroupBox;
-    sPanel1: TsPanel;
-    sBitBtn2: TsBitBtn;
-    sBitBtn1: TsBitBtn;
+    S: TGroupBox;
+    sPanel1: TPanel;
+    sBitBtn2: TBitBtn;
+    sBitBtn1: TBitBtn;
     Image2: TImage;
     imgOK1: TImage;
     imgOK1_2: TImage;
@@ -69,27 +60,30 @@ type
     imgOK2_2: TImage;
     imgOK3: TImage;
     imgOk3_2: TImage;
-    sLabel8: TsLabel;
-    sLabel10: TsLabel;
-    sLabel11: TsLabel;
-    sLabel12: TsLabel;
-    sLabel13: TsLabel;
-    sLabel14: TsLabel;
-    sLabel15: TsLabel;
-    sLabel16: TsLabel;
-    sLabel17: TsLabel;
-    sLabel18: TsLabel;
-    sLabel19: TsLabel;
-    sLabel20: TsLabel;
-    edtHesaplamaYapilacakTarih: TsDateEdit;
+    sLabel8: TLabel;
+    sLabel10: TLabel;
+    sLabel11: TLabel;
+    sLabel12: TLabel;
+    sLabel13: TLabel;
+    sLabel14: TLabel;
+    sLabel15: TLabel;
+    sLabel16: TLabel;
+    sLabel17: TLabel;
+    sLabel18: TLabel;
+    sLabel19: TLabel;
+    sLabel20: TLabel;
     imgGulen: TImage;
     imgAglayan: TImage;
-    sBitBtn3: TsBitBtn;
-    edtEmekliSandigi: TsSpinEdit;
-    sLabel21: TsLabel;
+    sBitBtn3: TBitBtn;
+    edtEmekliSandigi: TSpinEdit;
+    sLabel21: TLabel;
     AlanlarSfrla1: TMenuItem;
     actYardim: TAction;
     Image3: TImage;
+    edtDogumTarihi: TMaskEdit;
+    edtSigortaliBaslangicTarihi: TMaskEdit;
+    edtAskerlikTarihi: TMaskEdit;
+    edtHesaplamaYapilacakTarih: TMaskEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure actAlanlariSifirlaExecute(Sender: TObject);
@@ -167,7 +161,7 @@ edtAskerlikPrimSayisi.Text :='0';
 edtEmekliSandigi.Text :='0';
 edtBagkur.Text :='0';
 edtAskerlikTarihi.Enabled :=False;
-edtHesaplamaYapilacakTarih.Date := now;
+edtHesaplamaYapilacakTarih.Text := DateToStr(now);
 
 sLabel14.Caption := '0';
 sLabel15.Caption := '0';
@@ -206,14 +200,14 @@ EnBuyukTarih := StrToDate('01.01.2100');
 if TryStrToDate(edtDogumTarihi.Text,dumyDate) = false Then
 begin
    edtDogumTarihi.SetFocus;
-   sShowMessage('Hatalý bir doðum tarihi girdiniz! Lütfen geçerli bir tarih giriniz...');
+   ShowMessage('Hatalý bir doðum tarihi girdiniz! Lütfen geçerli bir tarih giriniz...');
    Exit;
 End;
 
-if (edtDogumTarihi.Date < EnKucukTarih) or (edtDogumTarihi.Date > EnBuyukTarih) Then
+if (StrToDate(edtDogumTarihi.Text) < EnKucukTarih) or ( StrToDate(edtDogumTarihi.Text) > EnBuyukTarih) Then
 begin
    edtDogumTarihi.SetFocus;
-   sShowMessage('Hatalý bir doðum tarihi girdiniz! Lütfen geçerli bir tarih giriniz...');
+   ShowMessage('Hatalý bir doðum tarihi girdiniz! Lütfen geçerli bir tarih giriniz...');
    Exit;
 End;
 
@@ -222,14 +216,14 @@ End;
 if TryStrToDate(edtSigortaliBaslangicTarihi.Text,dumyDate) = false Then
 begin
    edtSigortaliBaslangicTarihi.SetFocus;
-   sShowMessage('SSK Baþlangýç tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz...');
+   ShowMessage('SSK Baþlangýç tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz...');
    Exit;
 End;
 
-if (edtSigortaliBaslangicTarihi.Date < EnKucukTarih) or (edtSigortaliBaslangicTarihi.Date > EnBuyukTarih) Then
+if (StrToDate(edtSigortaliBaslangicTarihi.Text) < EnKucukTarih) or (StrToDate(edtSigortaliBaslangicTarihi.Text) > EnBuyukTarih) Then
 begin
    edtSigortaliBaslangicTarihi.SetFocus;
-   sShowMessage('SSK Baþlangýç tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz...');
+   ShowMessage('SSK Baþlangýç tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz...');
    Exit;
 End;
 
@@ -238,7 +232,7 @@ End;
 if TryStrToInt(edtPrimOdemeGunSayisi.Text,dumyInteger) = false Then
 begin
    edtPrimOdemeGunSayisi.SetFocus;
-   sShowMessage('SSK Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
+   ShowMessage('SSK Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
    Exit;
 End;
 
@@ -246,7 +240,7 @@ End;
 if TryStrToInt(edtIstegeBagliGunSayisi.Text,dumyInteger) = false Then
 begin
    edtIstegeBagliGunSayisi.SetFocus;
-   sShowMessage('Ýsteðe Baðlý Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
+   ShowMessage('Ýsteðe Baðlý Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
    Exit;
 End;
 
@@ -254,7 +248,7 @@ End;
 if TryStrToInt(edtAskerlikPrimSayisi.Text,dumyInteger) = false Then
 begin
    edtAskerlikPrimSayisi.SetFocus;
-   sShowMessage('Askerlik Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
+   ShowMessage('Askerlik Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
    Exit;
 End;
 
@@ -262,25 +256,25 @@ if dumyInteger > 0 Then
   if TryStrToDate(edtAskerlikTarihi.Text,dumyDate) = false Then
   begin
      edtAskerlikTarihi.SetFocus;
-     sShowMessage('Askerlik tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz ya da askerlik borçlanmasýný 0 yapýnýz.');
+     ShowMessage('Askerlik tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz ya da askerlik borçlanmasýný 0 yapýnýz.');
      Exit;
   End;
 
 if dumyInteger > 0 Then
-  if (edtAskerlikTarihi.Date < EnKucukTarih) or (edtAskerlikTarihi.Date > EnBuyukTarih) Then
+  if (StrToDate(edtAskerlikTarihi.Text) < EnKucukTarih) or (StrToDate(edtAskerlikTarihi.Text) > EnBuyukTarih) Then
   begin
       edtAskerlikTarihi.SetFocus;
-      sShowMessage('Askerlik tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz ya da askerlik borçlanmasýný 0 yapýnýz.');
+      ShowMessage('Askerlik tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz ya da askerlik borçlanmasýný 0 yapýnýz.');
      Exit;
   End;
 
 
 
 if dumyInteger > 0 Then
-  if YearsBetween(edtAskerlikTarihi.Date,edtDogumTarihi.Date) <18 Then
+  if YearsBetween(StrToDate(edtAskerlikTarihi.Text),StrToDate(edtDogumTarihi.Text)) <18 Then
   begin
      edtAskerlikTarihi.SetFocus;
-     sShowMessage('Askerlik tarihi geçersiz! 18 yaþýna gelmeden askere gidilemez...');
+     ShowMessage('Askerlik tarihi geçersiz! 18 yaþýna gelmeden askere gidilemez...');
      Exit;
 End;
 
@@ -288,37 +282,37 @@ End;
 if TryStrToInt(edtBagkur.Text,dumyInteger) = false Then
 begin
    edtBagkur.SetFocus;
-   sShowMessage('Bað-Kur Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
+   ShowMessage('Bað-Kur Gün sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
    Exit;
 End;
 
 if TryStrToInt(edtEmekliSandigi.Text,dumyInteger) = false Then
 begin
    edtEmekliSandigi.SetFocus;
-   sShowMessage('Emekli Sandýðý sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
+   ShowMessage('Emekli Sandýðý sayýsý hatalý. Lütfen geçerli bir sayý giriniz...');
    Exit;
 End;
 
   if TryStrToDate(edtHesaplamaYapilacakTarih.Text,dumyDate) = false Then
   begin
      edtHesaplamaYapilacakTarih.SetFocus;
-     sShowMessage('Hesaplama tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz.');
+     ShowMessage('Hesaplama tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz.');
      Exit;
   End;
 
 
-if (edtHesaplamaYapilacakTarih.Date < EnKucukTarih) or (edtHesaplamaYapilacakTarih.Date > EnBuyukTarih) Then
+if (StrToDate(edtHesaplamaYapilacakTarih.Text) < EnKucukTarih) or (StrToDate(edtHesaplamaYapilacakTarih.Text) > EnBuyukTarih) Then
 begin
     edtHesaplamaYapilacakTarih.SetFocus;
-    sShowMessage('Hesaplama tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz.');
+    ShowMessage('Hesaplama tarihini hatalý girdiniz! Lütfen geçerli bir tarih giriniz.');
    Exit;
 End;
 
 //    ShowMessage(inttostr(DaysBetween(edtHesaplamaYapilacakTarih.Date,edtSigortaliBaslangicTarihi.Date)));
-if DaysBetween(edtHesaplamaYapilacakTarih.Date,edtSigortaliBaslangicTarihi.Date)  < edtPrimOdemeGunSayisi.Value then
+if DaysBetween(StrToDate(edtHesaplamaYapilacakTarih.Text),StrToDate(edtSigortaliBaslangicTarihi.Text))  < edtPrimOdemeGunSayisi.Value then
 begin
     edtPrimOdemeGunSayisi.SetFocus;
-    sShowMessage('Belirtilen yýllar arasýnda belirtilen prim miktarýný yatýrmýþ olamaz. Lütfen deðerleri düzeltip tekrar deneyin...');
+    ShowMessage('Belirtilen yýllar arasýnda belirtilen prim miktarýný yatýrmýþ olamaz. Lütfen deðerleri düzeltip tekrar deneyin...');
    Exit;
 End;
 
@@ -326,7 +320,7 @@ End;
 if StrToDate(edtSigortaliBaslangicTarihi.Text) <= StrToDate(edtDogumTarihi.Text) then
 begin
     edtSigortaliBaslangicTarihi.SetFocus;
-    sShowMessage('Sigortaya baþlangýç tarihi doðum tarihinden küçük olamaz');
+    ShowMessage('Sigortaya baþlangýç tarihi doðum tarihinden küçük olamaz');
    Exit;
 End;
 
@@ -337,7 +331,7 @@ End;
 Emekli                          := TEmekli.Create;
 Emekli.DogumTarihi              := StrToDate(edtDogumTarihi.Text);
 Emekli.SigortaliBaslangicTarihi := StrToDate(edtSigortaliBaslangicTarihi.Text);
-Emekli.HesaplamaYapiacalTarih   := edtHesaplamaYapilacakTarih.Date;
+Emekli.HesaplamaYapiacalTarih   := StrToDate(edtHesaplamaYapilacakTarih.Text);
 
 if cmbCinsiyet.ItemIndex = 0 then
    Emekli.Cinsiyet := cnErkek
@@ -346,8 +340,9 @@ else
 
 Emekli.PrimOdemeGunSayisi          := StrToInt(edtPrimOdemeGunSayisi.Text);
 Emekli.IstegePrimOdemeGunSayisi    := StrToInt(edtIstegeBagliGunSayisi.Text);
-Emekli.AskerlikBorclanmaTarihi     := edtAskerlikTarihi.Date;
 Emekli.AskerlikBorclanmaPrimSayisi := StrToInt(edtAskerlikPrimSayisi.Text);
+if Emekli.AskerlikBorclanmaPrimSayisi > 0 then
+ Emekli.AskerlikBorclanmaTarihi     := StrToDate(edtAskerlikTarihi.Text);
 Emekli.BagKurPrimSayisi            := StrToInt(edtBagkur.Text);
 Emekli.EmekliSandigiPrimSayisi     := StrToInt(edtEmekliSandigi.Text);
 
@@ -361,7 +356,7 @@ if Emekli.EmeklilikDurumunuHesapla then
 begin
   imgGulen.Visible := true;
   if son2520GunuKontrolEt then
-        sShowMessage('DÝKKAT!!! Son 2520 günlük hizmetinde en çok SSK primi varsa emekli olabilir ! ');
+        ShowMessage('DÝKKAT!!! Son 2520 günlük hizmetinde en çok SSK primi varsa emekli olabilir ! ');
 end
 else
 begin
@@ -369,9 +364,9 @@ begin
   if emekli.EmeklilikDurumunuHesapla_Yastan then
   begin
     if son2520GunuKontrolEt then
-        sShowMessage('DÝKKAT!!! Son 2520 günlük hizmetinde en çok SSK primi varsa bu kiþi yaþtan emekli olabilir ! ')
+        ShowMessage('DÝKKAT!!! Son 2520 günlük hizmetinde en çok SSK primi varsa bu kiþi yaþtan emekli olabilir ! ')
     else
-       sShowMessage('DÝKKAT! Bu kiþi yaþtan emekli olabiliyor...');
+       ShowMessage('DÝKKAT! Bu kiþi yaþtan emekli olabiliyor...');
 
      imgAglayan.Visible := false;
      imgGulen.Visible := true;
@@ -401,7 +396,7 @@ imgOK3_2.Visible := not imgOK3.Visible;
 
 memoResult.Lines := emekli.Log;
 
- FreeAndNil(Emekli);
+
 
 end;
 
@@ -453,12 +448,12 @@ end;
 
 procedure TfrmAna.sBitBtn3Click(Sender: TObject);
 begin
-sShowMessage('Hakeder yazýsý henüz eklenmedi !');
+ShowMessage('Hakeder yazýsý henüz eklenmedi !');
 end;
 
 procedure TfrmAna.Hakknda2Click(Sender: TObject);
 begin
-sShowMessage(strProgramAdi + ' '+ strProgramVersiyon + #13+ 'Sadettin POLAT' + #13+ 'sadettinpolat@mail.ru'+#13+'http://www.sadettinpolat.com' + #13+#13 + 'Yardýmlarýn dolayý Kadir UZUN''a teþekkür ederim.');
+ShowMessage(strProgramAdi + ' '+ strProgramVersiyon + #13+ 'Sadettin POLAT' + #13+ 'sadettinpolat@mail.ru'+#13+'http://www.sadettinpolat.com' + #13+#13 + 'Yardýmlarýn dolayý Kadir UZUN''a teþekkür ederim.');
 end;
 
 procedure TfrmAna.ToolButton8Click(Sender: TObject);
@@ -468,12 +463,12 @@ end;
 
 procedure TfrmAna.actYardimExecute(Sender: TObject);
 begin
- sShowMessage('Yardým bölümü hazýrlanýyor !');
+ ShowMessage('Yardým bölümü hazýrlanýyor !');
 end;
 
 procedure TfrmAna.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-if sMessageDlg('Programý kapatmak istiyor musunuz?',mtInformation,[mbyes,mbno],0) = mrno then
+if MessageDlg('Programý kapatmak istiyor musunuz?',mtInformation,[mbyes,mbno],0) = mrno then
   Action :=caNone;
 
 end;
