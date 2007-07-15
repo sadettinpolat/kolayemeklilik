@@ -8,7 +8,7 @@ uses
   Buttons, ExtCtrls, ComCtrls, ToolWin, Spin;
 
 const strProgramAdi='Kolay Emeklilik';
-const strProgramVersiyon = '1.1 Beta';
+const strProgramVersiyon = '1.2 Beta';
 
 type
   TfrmAna = class(TForm)
