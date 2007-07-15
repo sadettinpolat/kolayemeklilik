@@ -1,0 +1,72 @@
+<project name="KolayEmeklilik"
+         basedir="."
+         default="ProjeyiPaketle" >
+
+<property name="ProjeName" value="KolayEmeklilik" />
+<property name="Build" value="${basedir}/Build" />
+<property name="DUnitSRC" value="C:/dunit/src" />
+<property name="srcDir" value="${basedir}/source/source" />
+<property name="dcuDir" value="${basedir}/source/dcu" />
+<property name="ZipFile" value="${Build}/${ProjeName}.zip" /> 
+
+
+<target name="DizinleriTemizle" >
+<echo message="${Build} dizini temizleniyor..." />
+    <delete dir="${Build}" >
+       <include name="**" />
+    </delete>
+</target>
+
+
+<target name="UnitTestleriniCalistir">
+		<dcc source="${basedir}/dunit/${ProjeName}Tests.dpr">
+			<build value="true"/>
+			<optimize value="true"/>
+			<console value="true"/>
+                        <uselibrarypath   value="true" />
+			<unitpath>
+				<include name="${DUnitSRC}"/>
+				<include name="${dcuDir}"/>
+			</unitpath>          
+		</dcc>
+
+		<exec executable="${basedir}/dunit/${ProjeName}Tests.exe" >
+		</exec>
+</target>
+
+
+
+
+<target name="ProjeyiDerle" depends="DizinleriTemizle,UnitTestleriniCalistir">
+<echo message="Proje Derleniyor..." />
+  <dcc source="${srcDir}/${ProjeName}.dpr">
+     <uselibrarypath   value="true" />
+     <unitpath>
+	<include name="${dcuDir}"/>
+    </unitpath>          
+
+  </dcc>
+
+ <echo message="Yeni surum ${Build} dizinine kopyalaniyor..." />
+ <move tofile="${Build}/${ProjeName}.exe">
+ <fileset dir="${basedir}">
+  <include name="${ProjeName}.exe" /> 
+  </fileset>
+  </move>
+</target>
+
+
+<target name="ProjeyiPaketle" depends="ProjeyiDerle">
+<echo message="Proje Paketleniyor..." />
+  <delete file="${zipfile}" /> 
+  <zip zipfile="${zipfile}">
+  <fileset dir="${Build}">
+  <include name="${ProjeName}.exe" /> 
+  </fileset>
+  </zip>
+
+</target>
+
+
+
+</project>
