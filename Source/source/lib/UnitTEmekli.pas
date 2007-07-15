@@ -3,8 +3,8 @@ unit UnitTEmekli;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,DateUtils,sDialogs;
+  Windows, Messages, SysUtils, Variants, Classes, Forms,
+  Dialogs, DateUtils,Controls;
 
 type TCinsiyet = (cnErkek,cnKadin);
 

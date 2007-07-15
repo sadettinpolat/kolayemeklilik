@@ -401,7 +401,7 @@ imgOK3_2.Visible := not imgOK3.Visible;
 
 memoResult.Lines := emekli.Log;
 
-
+ FreeAndNil(Emekli);
 
 end;
 
