@@ -1,6 +1,6 @@
 object frmAna: TfrmAna
-  Left = 141
-  Top = 189
+  Left = 224
+  Top = 121
   Width = 766
   Height = 557
   Caption = 'Emekli Yap 1.0 Beta'
@@ -7269,10 +7269,11 @@ object frmAna: TfrmAna
     Height = 59
     Align = alTop
     BevelOuter = bvNone
+    Color = 12040372
     TabOrder = 5
     object sBitBtn2: TBitBtn
       Left = 208
-      Top = 2
+      Top = 7
       Width = 193
       Height = 49
       Cursor = crHandPoint
@@ -7311,7 +7312,7 @@ object frmAna: TfrmAna
     end
     object sBitBtn1: TBitBtn
       Left = 8
-      Top = 2
+      Top = 7
       Width = 193
       Height = 49
       Cursor = crHandPoint
@@ -7365,7 +7366,7 @@ object frmAna: TfrmAna
     end
     object sBitBtn3: TBitBtn
       Left = 408
-      Top = 2
+      Top = 7
       Width = 193
       Height = 49
       Cursor = crHandPoint
