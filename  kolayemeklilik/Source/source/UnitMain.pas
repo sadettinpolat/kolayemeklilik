@@ -11,7 +11,7 @@ uses
   ExtCtrls, sComboBox, sEdit, sSpinEdit, ActnList, ImgList,sdialogs, sPanel;
 
 const strProgramAdi='Kolay Emeklilik';
-const strProgramVersiyon = '1.1 Beta';
+const strProgramVersiyon = '1.2 Beta';
 
 type
   TfrmAna = class(TForm)
