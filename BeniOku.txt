@@ -2,7 +2,4 @@ Kolay Emeklilik
 
 Program Delphi 6 ile derlenmistir.
 Delphi4, Delphi5,Delphi 7, 2005,2006,2007 ile de derlenebilir.
-3. parti Bilesen olarak Alpha Control kullanilmistir. 
-http://www.alphaskins.com/dwnld.php
-yakin bir zamanda Alpha Control un bedava surumu olan Lite versiyonuna uygun hale getirilecek ya da bu bilesen tamamen kaldirilarak Lazarus ile de uyumlu hale getirilecek.
 
