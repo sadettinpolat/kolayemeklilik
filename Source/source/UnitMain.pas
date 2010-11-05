@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls,UnitTEmekli, Mask,dateutils, ImgList, ActnList, Menus,
-  Buttons, ExtCtrls, ComCtrls, ToolWin, Spin;
+  Buttons, ExtCtrls, ComCtrls, ToolWin, Spin, frxClass, frxExportRTF,
+  frxExportXML, frxExportXLS, frxExportHTML, frxExportPDF, frxDesgn, frxChBox;
 
 const strProgramAdi='Kolay Emeklilik';
 const strProgramVersiyon = '1.2 Beta';
@@ -84,6 +85,14 @@ type
     edtSigortaliBaslangicTarihi: TMaskEdit;
     edtAskerlikTarihi: TMaskEdit;
     edtHesaplamaYapilacakTarih: TMaskEdit;
+    frxReport1: TfrxReport;
+    frxPDFExport1: TfrxPDFExport;
+    frxHTMLExport1: TfrxHTMLExport;
+    frxXLSExport1: TfrxXLSExport;
+    frxXMLExport1: TfrxXMLExport;
+    frxRTFExport1: TfrxRTFExport;
+    frxDesigner1: TfrxDesigner;
+    frxCheckBoxObject1: TfrxCheckBoxObject;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure actAlanlariSifirlaExecute(Sender: TObject);
@@ -324,6 +333,12 @@ begin
    Exit;
 End;
 
+if cmbCinsiyet.ItemIndex = 1  then
+begin
+   edtAskerlikPrimSayisi.Value :=0;
+   edtAskerlikTarihi.Text :='';
+end;
+
 
 ////////////////  kontrol satýrlarý /////////////////////////////////
 
@@ -448,7 +463,51 @@ end;
 
 procedure TfrmAna.sBitBtn3Click(Sender: TObject);
 begin
-ShowMessage('Hakeder yazýsý henüz eklenmedi !');
+//ShowMessage('Hakeder yazýsý henüz eklenmedi !');
+(frxReport1.FindObject('Memo10') as TfrxMemoView).Lines.Text :=': '+edtDogumTarihi.Text;
+(frxReport1.FindObject('Memo11') as TfrxMemoView).Lines.Text :=': '+edtSigortaliBaslangicTarihi.Text;
+(frxReport1.FindObject('Memo12') as TfrxMemoView).Lines.Text :=': '+inttostr(edtPrimOdemeGunSayisi.Value);
+(frxReport1.FindObject('Memo13') as TfrxMemoView).Lines.Text :=': '+inttostr(edtIstegeBagliGunSayisi.Value);
+(frxReport1.FindObject('Memo14') as TfrxMemoView).Lines.Text :=': '+(cmbCinsiyet.Text);
+
+(frxReport1.FindObject('Memo20') as TfrxMemoView).Lines.Text :=': '+inttostr(edtAskerlikPrimSayisi.Value);
+if edtAskerlikPrimSayisi.Value >0 then
+  (frxReport1.FindObject('Memo21') as TfrxMemoView).Lines.Text :=': '+(edtAskerlikTarihi.Text)
+else
+  (frxReport1.FindObject('Memo21') as TfrxMemoView).Lines.Text :=':';
+
+(frxReport1.FindObject('Memo22') as TfrxMemoView).Lines.Text :=': '+(edtBagkur.Text);
+(frxReport1.FindObject('Memo23') as TfrxMemoView).Lines.Text :=': '+(edtEmekliSandigi.Text);
+(frxReport1.FindObject('Memo24') as TfrxMemoView).Lines.Text :=': '+(edtHesaplamaYapilacakTarih.Text);
+
+(frxReport1.FindObject('Memo2') as TfrxMemoView).Lines.Text :=(memoResult.Text);
+
+(frxReport1.FindObject('Memo30') as TfrxMemoView).Lines.Text :=(sLabel14.Caption);
+(frxReport1.FindObject('Memo32') as TfrxMemoView).Lines.Text :=(sLabel16.Caption);
+(frxReport1.FindObject('Memo34') as TfrxMemoView).Lines.Text :=(sLabel18.Caption);
+
+(frxReport1.FindObject('Memo31') as TfrxMemoView).Lines.Text :=(sLabel15.Caption);
+(frxReport1.FindObject('Memo33') as TfrxMemoView).Lines.Text :=(sLabel17.Caption);
+(frxReport1.FindObject('Memo35') as TfrxMemoView).Lines.Text :=(sLabel19.Caption);
+
+if imgOK1.Visible then
+(frxReport1.FindObject('CheckBox1') as TfrxCheckBoxView).CheckStyle :=csCheck
+else
+(frxReport1.FindObject('CheckBox1') as TfrxCheckBoxView).CheckStyle :=csCross;
+
+if imgOK2.Visible then
+(frxReport1.FindObject('CheckBox2') as TfrxCheckBoxView).CheckStyle :=csCheck
+else
+(frxReport1.FindObject('CheckBox2') as TfrxCheckBoxView).CheckStyle :=csCross;
+
+if imgOK3.Visible then
+(frxReport1.FindObject('CheckBox3') as TfrxCheckBoxView).CheckStyle :=csCheck
+else
+(frxReport1.FindObject('CheckBox3') as TfrxCheckBoxView).CheckStyle :=csCross;
+
+
+
+frxReport1.ShowReport();
 end;
 
 procedure TfrmAna.Hakknda2Click(Sender: TObject);

@@ -1,0 +1,48 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{A9A958B7-5C7E-4AEA-8100-9ABDD9602EFD}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="Source\source\KolayEmeklilik.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="dunit\KolayEmeklilikTests.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="KolayEmeklilik">
+			<MSBuild Projects="Source\source\KolayEmeklilik.dproj"/>
+		</Target>
+		<Target Name="KolayEmeklilik:Clean">
+			<MSBuild Targets="Clean" Projects="Source\source\KolayEmeklilik.dproj"/>
+		</Target>
+		<Target Name="KolayEmeklilik:Make">
+			<MSBuild Targets="Make" Projects="Source\source\KolayEmeklilik.dproj"/>
+		</Target>
+		<Target Name="KolayEmeklilikTests">
+			<MSBuild Projects="dunit\KolayEmeklilikTests.dproj"/>
+		</Target>
+		<Target Name="KolayEmeklilikTests:Clean">
+			<MSBuild Targets="Clean" Projects="dunit\KolayEmeklilikTests.dproj"/>
+		</Target>
+		<Target Name="KolayEmeklilikTests:Make">
+			<MSBuild Targets="Make" Projects="dunit\KolayEmeklilikTests.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="KolayEmeklilik;KolayEmeklilikTests"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="KolayEmeklilik:Clean;KolayEmeklilikTests:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="KolayEmeklilik:Make;KolayEmeklilikTests:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
